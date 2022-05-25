@@ -1,23 +1,13 @@
 #pragma once
-#include <fstream>
-#include <iostream>
+#include "Header.h"
 using namespace std;
-class FileOutput
+class FileOutput : public Base
 {
 private:
-	ifstream fin;
+	ofstream fout;
 public:
-	FileOutput()
-	{
-		fin.open("field.txt");
-	}
-	void FullOutput()
-	{
-		char c;
-		while (fin >> c)
-		{
-			cout << c;
-		}
-	}
+	FileOutput(Base* parent, string name = "FileOutput");
+	void WriteError(string text);
+
 };
 

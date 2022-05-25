@@ -1,13 +1,4 @@
-﻿#include <iostream>
-#include <fstream>
-#include <string>
-#include "ComandReader.h"
-#include "CreatePrepare.h"
-#include "RobotMoving.h"
-#include "ErrorMessages.h"
-#include "FileOutput.h"
-#include "System.h"
-#include "Writer.h"
+﻿#include "Header.h"
 using namespace std;
 
 

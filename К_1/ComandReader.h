@@ -1,21 +1,12 @@
 #pragma once
-#include <iostream>
-#include <fstream>
-#include <string>
+#include "Header.h"
 using namespace std;
 
-class ComandReader
+class ComandReader : public Base
 {
 private:
     string comand;
 public:
-    string ReadComand()
-    {
-        cin >> comand;
-        if (comand != "MOVE" && comand != "WRITE" && comand != "END")
-        {
-            comand = "ERROR comand: " + comand;
-        }
-        return comand;
-    }
+    ComandReader(Base* parent, string name = "ComandReader");
+    string ReadComand();
 };

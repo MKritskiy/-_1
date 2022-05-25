@@ -139,20 +139,23 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="Base.cpp" />
     <ClCompile Include="ComandReader.cpp" />
     <ClCompile Include="CreatePrepare.cpp" />
-    <ClCompile Include="ErrorMessages.cpp" />
     <ClCompile Include="FileOutput.cpp" />
+    <ClCompile Include="ConsoleOutput.cpp" />
     <ClCompile Include="RobotMoving.cpp" />
     <ClCompile Include="System.cpp" />
     <ClCompile Include="Writer.cpp" />
     <ClCompile Include="К_1.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="Header.h" />
+    <ClInclude Include="Base.h" />
     <ClInclude Include="ComandReader.h" />
     <ClInclude Include="CreatePrepare.h" />
-    <ClInclude Include="ErrorMessages.h" />
     <ClInclude Include="FileOutput.h" />
+    <ClInclude Include="ConsoleOutput.h" />
     <ClInclude Include="RobotMoving.h" />
     <ClInclude Include="System.h" />
     <ClInclude Include="Writer.h" />
