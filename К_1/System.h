@@ -10,14 +10,14 @@ using namespace std;
 class System : public Base
 {
 public:
-	System(Base* parent, string name = "", int number = 1); //Добавлено
+	System(Base* parent, string name = "System", int number = obj_system);
 
-	void BuildTree(); //Изменено
-	void Comands(); //Изменено
-	int ExecApp(); //Изменено
+	void BuildTree();
+	void ComandProcessing(string& command); 
+	int ExecApp();
 
-	void Signal(string& text); //Добавлено
-	void Handler(string text); //Добавлено
+	void Signal(string& text);
+	void Handler(string& text); 
 };
 
 #endif

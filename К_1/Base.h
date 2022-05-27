@@ -7,7 +7,7 @@
 using namespace std;
 class Base;
 typedef void (Base ::* signal) (string&);
-typedef void (Base ::* handler) (string);
+typedef void (Base ::* handler) (string&);
 class Base
 {
 protected:
@@ -24,14 +24,27 @@ protected:
 	};
 	vector<Base*> children; //Из КЛ_3_2
 	vector<connect> connections; //Добавлено
-public:
-	Base(Base* parent, string name = "", int number = 0); //Изменено
 
-	void PrintTree(); //Из КЛ_3_2
+	enum obj
+	{
+		obj_base = 0,
+		obj_system = 1,
+		obj_create_prepare = 2,
+		obj_comand_reader = 3,
+		obj_robot_moving = 4,
+		obj_writer = 5,
+		obj_file_output = 6,
+		obj_console_output = 7
+	};
+public:
+	Base(Base* parent, string name = "", int number = obj_base); //Изменено
+
+	void CPrintTree(); //Из КЛ_3_2
+	void FPrintTree(ofstream& fout);
 
 	void SetConnection(signal sig, Base* to, handler hand); //Добавлено
 	void DelConnection(signal sig, Base* to, handler hand); //Добавлено
-	void Emit(signal sig, string& message); //Добавлено
+	void Emit(signal sig, int num, string& message); //Добавлено
 
 	void SetState(int newState); //Из КЛ_3_1
 	int GetState(); //Из КЛ_3_1
@@ -52,5 +65,7 @@ public:
 	Base* GetObjectByName(string name);//Из КЛ_3_2
 	Base* GetObjectByPath(string path);//Из КЛ_3_2
 	string GetPath(Base* elem); //Добавлено
+
+	vector<string> Split(string str);
 };
 #endif

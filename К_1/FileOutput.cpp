@@ -1,11 +1,20 @@
 #include "FileOutput.h"
 
-FileOutput::FileOutput(Base* parent, string name) : Base (parent, name)
-{
-	fout.open("field.txt", ios_base::in | ios_base::ate);
-}
+FileOutput::FileOutput(Base* parent, string name, int number) : Base (parent, name, number)
+{}
 
-void FileOutput::WriteError(string text)
+void FileOutput::ErrorSignal(string& text) {}
+void FileOutput::ErrorHandler(string& text)
 {
-	fout << endl << text;
+	if (GetState())
+	{
+		ofstream fout;
+		fout.open("field.txt", ios_base::in | ios_base::ate);
+		fout << '\n'<<text;
+		fout.close();
+	}
 }
+void FileOutput::Signal(string& text) {}
+void FileOutput::Handler(string& text) {}
+
+

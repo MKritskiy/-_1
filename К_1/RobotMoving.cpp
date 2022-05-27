@@ -1,23 +1,48 @@
 #include "RobotMoving.h"
 
-RobotMoving::RobotMoving(Base* parent, string name) : Base(parent, name)
-{
-    fout.open("field.txt", ios_base::in);
-}
+RobotMoving::RobotMoving(Base* parent, string name, int number) : Base(parent, name, number)
+{}
 
 void RobotMoving::Move(int x, int y)
 {
-    if (col + x > 9 || row + y > 9)
+    string message;
+    if (x >= 10 || y >= 10 || x<=0 || y<=0)
     {
-        cout << "Coordinate is wrong ( " << x << ", " << y << " )";
+        message = to_string(x) + ", " + to_string(y);
+        Emit(SIGNAL_D(RobotMoving::ErrorSignal), obj_file_output, message);
         return;
     }
-    fout.seekp((col + x) + 10 * (row + y) + 2 * (row + y));
-    col += x;
-    row += y;
+    row = x;
+    col = y;
+    message = to_string(x) + " " + to_string(y);
+    Emit(SIGNAL_D(RobotMoving::Signal), obj_writer, message);
 }
 
-RobotMoving::~RobotMoving()
+void RobotMoving::ErrorSignal(string& text)
 {
-    fout.close();
+    if (GetState())
+    {
+        text = "Coordinate is wrong ( " + text + " )";
+    }
 }
+void RobotMoving::ErrorHandler(string& text)
+{
+    if (GetState())
+    {
+        cout << text;
+    }
+}
+void RobotMoving::Signal(string& text)
+{}
+
+void RobotMoving::Handler(string& text)
+{
+    if (GetState())
+    {
+        vector<string> splited = Split(text);
+        int x = stoi(splited[1]);
+        int y = stoi(splited[2]);
+        Move(x, y);
+    }
+}
+

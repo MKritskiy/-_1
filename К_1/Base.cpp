@@ -1,5 +1,5 @@
 #include "Base.h"
-
+#include <fstream>
 Base::Base(Base* parent, string name, int number)
 {
 	SetParent(parent);
@@ -9,7 +9,7 @@ Base::Base(Base* parent, string name, int number)
 		children.push_back(this);
 }
 
-void Base::PrintTree()
+void Base::CPrintTree()
 {
 	static int n = 0;
 	for (int i = 0; i < n; i++)
@@ -17,15 +17,42 @@ void Base::PrintTree()
 		cout << "    ";
 	}
 	cout << children[0]->GetName();
+	if (GetState())
+	{
+		cout << " is ready";
+	}
+	else
+		cout << " is not ready";
 	for (int i = 1; i < children.size(); i++)
 	{
 		n++;
 		cout << endl;
-		children[i]->PrintTree();
+		children[i]->CPrintTree();
 		n--;
 	}
 }
-
+void Base::FPrintTree(ofstream& fout)
+{
+	static int n = 0;
+	for (int i = 0; i < n; i++)
+	{
+		fout << "    ";
+	}
+	fout << children[0]->GetName();
+	if (GetState())
+	{
+		fout << " is ready";
+	}
+	else
+		fout << " is not ready";
+	for (int i = 1; i < children.size(); i++)
+	{
+		n++;
+		fout << '\n';
+		children[i]->FPrintTree(fout);
+		n--;
+	}
+}
 void Base::SetConnection(signal sig, Base* to, handler hand)
 {
 	if (this->GetState())
@@ -54,13 +81,13 @@ void Base::DelConnection(signal sig, Base* to, handler hand)
 	}
 }
 
-void Base::Emit(signal sig, string& message)
+void Base::Emit(signal sig, int num, string& message)
 {
 	if (this->GetState()) {
 		(this->*(sig))(message);
 		for (int i = 0; i < this->connections.size(); i++)
 		{
-			if (this->connections[i].sig == sig && this->connections[i].to->GetState() != 0)
+			if (this->connections[i].sig == sig && this->connections[i].to->GetState() != 0 && this->connections[i].to->GetNumber() == num)
 			{
 				(connections[i].to->*(connections[i].hand))(message);
 			}
@@ -222,4 +249,17 @@ string Base::GetPath(Base* elem)
 		n = 1;
 		return path;
 	}
+}
+
+vector<string> Base::Split(string str)
+{
+	vector<string> splited;
+	int lpos = 0;
+	while (str.find(' ', lpos+1)!=string::npos)
+	{
+		splited.push_back(str.substr(lpos, str.find(' ', lpos+1)-lpos));
+		lpos = str.find(' ', lpos+1)+1;
+	}
+	splited.push_back(str.substr(lpos, str.length() - lpos));
+	return splited;
 }

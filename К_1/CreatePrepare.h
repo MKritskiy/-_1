@@ -4,12 +4,12 @@ using namespace std;
 
 class CreatePrepare : public Base
 {
-private:
-    string fpath = "field.txt";
-    ifstream fin;
-    ofstream fout;
 public:
-    CreatePrepare(Base* parent, string name = "CreatePrepare");
+    CreatePrepare(Base* parent, string name = "CreatePrepare", int number = obj_create_prepare);
     void CreateingAndPreparing();
-    ~CreatePrepare();
+
+    void ErrorSignal(string& text);
+    void ErrorHandler(const string& text = "");
+    void Signal(string& text);
+    void Handler(string& text);
 };

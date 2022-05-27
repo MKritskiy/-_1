@@ -3,11 +3,15 @@
 using namespace std;
 class ConsoleOutput : public Base
 {
-private:
-	ifstream fin;
 public:
-	ConsoleOutput(Base* parent, string name = "ConsoleOutput");
+	ConsoleOutput(Base* parent, string name = "ConsoleOutput", int number = obj_console_output);
 	void FullOutput();
-	~ConsoleOutput();
+
+	void Signal(string& text);
+	void Handler(string& text);
+
+	void ErrorSignal(string& text);
+	void ErrorHandler(string& text);
+
 };
 

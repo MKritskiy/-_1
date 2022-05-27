@@ -1,20 +1,36 @@
 #include "ConsoleOutput.h"
 
-ConsoleOutput::ConsoleOutput(Base* parent, string name) : Base(parent, name)
-{
-	fin.open("field.txt");
-}
+ConsoleOutput::ConsoleOutput(Base* parent, string name, int number) : Base(parent, name, number)
+{}
 
 void ConsoleOutput::FullOutput()
 {
+	ifstream fin;
+	fin.open("field.txt");
 	char c;
 	while (fin >> c)
 	{
 		cout << c;
 	}
+	fin.close();
 }
 
-ConsoleOutput::~ConsoleOutput()
+void ConsoleOutput::Signal(string& text)
+{}
+
+void ConsoleOutput::Handler(string& text)
 {
-	fin.close();
+
+}
+
+void ConsoleOutput::ErrorSignal(string& text)
+{
+}
+
+void ConsoleOutput::ErrorHandler(string& text)
+{
+	if (GetState())
+	{
+		cout << text;
+	}
 }
